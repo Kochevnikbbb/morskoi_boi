@@ -1,150 +1,194 @@
 package com.company;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    static final int FILED_LENGTH = 10;                                //ограничил размер поля FILED_LENGHT
-    static Scanner scanner = new Scanner(System.in);
+    static final int POLE = 10;                                //ограничил размер поля FILED_LENGHT
+    public static Scanner scanner = new Scanner(System.in);
+    private static char water = ' ';
+    private static char ship = '#';
+    private static char promazal = '•';
+    private static char poPaL = 'X';
+    private static char[][] poLe = new char[POLE][POLE];
+    private static int kolvoShip = 2;
+    private static int kolvoVystrelov = 5;
+
+    private static String player1;
+    private static String player2;
+
 
     public static void main(String[] args) {
-        // write your code here
+        igrovoePole333();
+
+        addShip();
+        igrovoePole();
+        vystrel();
+        igrovoePole();
+
+
+    }
+
+    public static void privetstve() {
         System.out.println("ИГРОК №1 введите своё имя ...");
-        String Player1 = scanner.nextLine();                               //СКАНИРУЕТ введенноё имя
-        System.out.println("Здарова заЙбал, " + Player1 + ")");
+        player1 = scanner.nextLine();                               //СКАНИРУЕТ введенноё имя
+        System.out.println("Здарова заЙбал, " + player1 + ")");
 
         System.out.println("ИГРОК №2 введите своё имя ...");
-        String Player2 = scanner.nextLine();
-        System.out.println("Салам алейкум родной " + Player2 + ", как ты брат? Как родные?");
+        player2 = scanner.nextLine();
+        System.out.println("Салам алейкум родной " + player2 + ", как ты брат? Как родные?");
 
         String OtvetNaVopr = scanner.nextLine(); //немного по петросянил
         System.out.println("да ладно не продолжай мне не интересно что у тебя всё " + OtvetNaVopr);
+    }
 
-        char[][] playerField1 = new char[FILED_LENGTH][FILED_LENGTH];        // расположение кароблей 1 игрока
-        char[][] playerField2 = new char[FILED_LENGTH][FILED_LENGTH];        // расположение кораблей 2 игрока
+    public static void igrovoePole() {
+        for (int i = 0; i < poLe.length; i++) {
+            for (int j = 0; j < poLe[i].length; j++) {
+                if (i == ship && j == ship) {
+                    continue;
+                } else if (poLe[i][j] == 0) {
+                    poLe[i][j] = water;
+                }
+                System.out.print(poLe[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
 
-        fillPlayerField(playerField1);                                       // соединяю два метода
-        fillPlayerField(playerField2);
+    public static void igrovoePole555() {
+        for (int i = 0; i < poLe.length; i++) {
+            for (int j = 0; j < poLe[i].length; j++) {
+                if (poLe[i][j] == 0) {
+                    poLe[i][j] = promazal;
+                }
+                System.out.print(poLe[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }  //чисто для красоты
 
+    public static void igrovoePole333() {
+        char[][] pOlE = new char[11][11];
 
-        char[][] playerBattleField1 = new char[FILED_LENGTH][FILED_LENGTH];
-        char[][] playerBattleField2 = new char[FILED_LENGTH][FILED_LENGTH];
+        pOlE[0][0] = '№';
+        pOlE[1][0] = '0';
+        pOlE[2][0] = '1';
+        pOlE[3][0] = '2';
+        pOlE[4][0] = '3';
+        pOlE[5][0] = '4';
+        pOlE[6][0] = '5';
+        pOlE[7][0] = '6';
+        pOlE[8][0] = '7';
+        pOlE[9][0] = '8';
+        pOlE[10][0] = '9';
 
+        pOlE[0][1] = '0';
+        pOlE[0][2] = '1';
+        pOlE[0][3] = '2';
+        pOlE[0][4] = '3';
+        pOlE[0][5] = '4';
+        pOlE[0][6] = '5';
+        pOlE[0][7] = '6';
+        pOlE[0][8] = '7';
+        pOlE[0][9] = '8';
+        pOlE[0][10] = '9';
+        /*int numX = 0;
+        int numY = 0;*/
+        for (int i = 0; i < pOlE.length; i++) {
+            for (int j = 0; j < pOlE[i].length; j++) {
+                if (pOlE[i][j] == 0) {
+                    pOlE[i][j] = promazal;
+                }
+                System.out.print(pOlE[i][j] + "\t");
+                /*numY++;
+                j=numY;*/
+            }
+            System.out.println();
+            /*numX++;
+            i = numX;
+            System.out.println(numX);*/
+        }
+
+    } //тоже самое
+
+    public static void addShip() {
+
+        int ostShip = 0;
+        do {
+            ostShip++;
+            System.out.println(player1 + " напишите координаты вашего " + ostShip + "-ого коробля ...");
+
+            System.out.println("напишите координату Х...");
+            Scanner corX = new Scanner(System.in);
+            byte x = corX.nextByte();
+
+            System.out.println("напишите координату Y...");
+            Scanner corY = new Scanner(System.in);
+            byte y = corY.nextByte();
+
+            poLe[x][y] = ship;
+            kolvoShip--;
+        }
+        while (kolvoShip > 0);
 
     }
 
-    private static void fillPlayerField(char[][] playerField) {
-        int x;
-        int y;
-        int position;
+    public static void vystrel() {
 
-        for (int i = 4; i >= 1; i--) {
-            for (int k = i; k <= 5 - i; k++) {
-                System.out.println("Расставляем " + i + "-палубный корабль. Осталось расставить: " + (k + 1));
+        do {
 
-                System.out.println("введите X кординату: ");
-                x = scanner.nextInt();
+            System.out.println("готовься будем мочить корабли XD у нас есть "+kolvoVystrelov + " снарядов для выстрела");
+            System.out.println("напишите координату Х...");
+            Scanner vysX = new Scanner(System.in);
+            byte X = vysX.nextByte();
 
-                System.out.println("введите Y кординату: ");
-                y = scanner.nextInt();
+            System.out.println("напишите координату Y...");
+            Scanner vysY = new Scanner(System.in);
+            byte Y = vysY.nextByte();
 
-                System.out.println("1 - горизонтальная; 2 - вертикальная ?");
-                position = scanner.nextInt();
+            if (poLe[X][Y] == ship) {
+                poLe[X][Y] = poPaL;
+                System.out.println("хороший выстрел");
+            } else if (poLe[X][Y] == water) {
+                poLe[X][Y] = promazal;
+                System.out.println("лошпед");
+            }
+            System.out.println();
 
-                if (position == 1) {
-                    for (int q = 0; q < i; q++) {
-                        playerField[y][x + q] = '1';
-                    }
-                }
-                if (position == 2) {
-                    for (int m = 0; m < i; m++) {
-                        playerField[y + m][x] = '1';
+            kolvoVystrelov--;
+        }
+        while (kolvoVystrelov > 0);
+    }
 
-                    }
-                }
-                printField(playerField);
+    public static void numPoleGorizont() {
+        byte num = 0;
+        do {
+            System.out.print("   " + num);
+            num++;
+        } while (num < 10);
+    }
+
+    public static void numPoleVysota() {
+        System.out.println("\n");
+        byte num = 1;
+        do {
+            System.out.println(num);
+            num++;
+        } while (num < 10);
+
+
+
+        /*for (int i = 0; i < pOlE.length; i++) {
+            for (int j = 0; j < pOlE[i].length; j++) {
+                num++;
+                System.out.print( pOlE[i][j] + num + "\t");
+                break;
 
             }
-        }
+            System.out.println();
+        }*/
     }
 
-    static void printField(char[][] field) {
 
-        for (char[] cells : field) {
-            for (char cell : t) {
-                // если значение дефолтовое (в случае char - 0), значит в данной клетке
-                // корабль не установлен - печатаем пустую клетку
-                if (cell == 0) {
-                    System.out.print(" |");
-                } else {
-                    // если клетка непустая (значение отличается от дефолтового),
-                    //тогда отрисовываем сожержимое клетки (элемента массива)
-                    System.out.print(cell + "|");
-                }
-            }
-            System.out.println("");
-            System.out.println("--------------------");
-        }
-    }
-
-    private static void playGame(String player1Name, String player2Name, char[][] playerField1, char[][] playerField2) {
-        // "карты" выстрелов - создаём двумерные массивы, которые содержат все выстрелы
-        // удачные (#) и неудачные (*)
-        char[][] playerBattleField1 = new char[FILED_LENGTH][FILED_LENGTH];
-        char[][] playerBattleField2 = new char[FILED_LENGTH][FILED_LENGTH];
-
-        // вспомогательные переменные, которым будут присваиваться значения текущего игрока -
-        // игрока, чья очередь делать выстрел. Сначала играет первый игрок, прошу прошения
-        // за тавтологию
-        String currentPlayerName = player1Name;
-        char[][] currentPlayerField = playerField2;
-        char[][] currentPlayerBattleField = playerBattleField1;
-
-        // внутри цикла происходит смена очередности игроков, выстрел, его обработка.
-        // код внутри цикла выполняется до тех пор, пока "живы" оба игрока - пока у двух игроков
-        // "частично" цел (ранен) ещё хотя бы один корабль
-        while (isPlayerAlive(playerField1) && isPlayerAlive(playerField2)) {
-            // принимаем от пользователя координаты выстрела
-            System.out.println(currentPlayerName + ", please, input x coord of shot");
-            int xShot = scanner.nextInt();
-            System.out.println(currentPlayerName + ", please, input y coord of shot");
-            int yShot = scanner.nextInt();
-
-            // обрабатываем выстрел и получаем возвращаемое значение метода handleShot
-            int shotResult = handleShot(currentPlayerBattleField, currentPlayerField, xShot, yShot);
-            // если выстрел неудачный, и не один корабль не повреждён, то очередь переходит к следующему игроку
-            if (shotResult == 0) {
-                currentPlayerName = player2Name;
-                currentPlayerField = playerField1;
-                currentPlayerBattleField = playerBattleField2;
-            }
-        }
-    }
-    private static int handleShot(char[][] battleField, char[][] field, int x, int y) {
-        if ('1'.equals(field[y][x])) {
-            field[y][x] = '#';
-            battleField[y][x] = '#';
-            System.out.println("Good shot!");
-            return 1;
-        }
-        battleField[y][x] = '*';
-        System.out.println("Bad shot!");
-        return 0;
-    }
-
-    /**
-     * Метод определяет, не проиграл ли еще игрок. Если у игрока остался хотя бы
-     * один "раненный" корабль, тогда пользователь продолжает игру.
-     * То есть, если на карте у игрока остался хотя бы один символ '1', которым мы отмечали
-     * корабли, то игра продолжается - возвращается значение true. Иначе false.
-     */
-    private static boolean isPlayerAlive(char[][] field) {
-        for (char[] cells : field) {
-            for (char cell : cells) {
-                if ('1' == cell) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 }
